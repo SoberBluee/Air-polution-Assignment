@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Pollutant Data</title>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+        <link rel="stylesheet" type="text/css" href="style.css" />
+        <script src="index.js"></script>
+        <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    </head>
+
+    <body>
+        <div id="map"></div>
+    
+        Range of monitoring station: 2km </br>
+        Click on markers to show relevent station information
+        <hr>
+
+        <u>Select station</u></br>
+        <select id="station_select">
+            <option value="data_188.xml">AURN Bristol Centre</option>
+            <option value="data_203.xml">Brislington Depot</option>
+            <option value="data_206.xml">Rupert Street</option>
+            <option value="data_209.xml">IKEA M32</option>
+            <option value="data_213.xml">Old Market</option>
+            <option value="data_215.xml">Parson Street School</option>
+            <option value="data_228.xml">Temple Meads Station</option>
+            <option value="data_270.xml">Wells Road</option>
+            <option value="data_271.xml">Trailer Portway P&R</option>
+            <option value="data_375.xml">Newfoundland Road Police Station</option>
+            <option value="data_395.xml">Shiners Garage</option>
+            <option value="data_447.xml">Bath Road</option>
+            <option value="data_452.xml">AURN St Pauls</option>
+            <option value="data_459.xml">Cheltenham Road \ Station Road</option>
+            <option value="data_463.xml">Fishponds Road</option>
+            <option value="data_500.xml">Temple Way</option>
+            <option value="data_501.xml">Colston Avenue</option>
+        </select>
+        </body>
+        <hr>
+        <u>Select pollutant </u></br>
+        <input type="checkbox" id="nox">NOX</input></br>
+        <input type="checkbox" id="no2">NO2</input></br>
+        <input type="checkbox" id="no">NO</input></br>
+        <hr>
+        Select Hour
+        <select id="hour_select">
+            <option value="1">1am</option>
+            <option value="2">2am</option>
+            <option value="3">3am</option>
+            <option value="4">4am</option>
+            <option value="5">5am</option>
+            <option value="6">6am</option>
+            <option value="7">7am</option>
+            <option value="8">8am</option>
+            <option value="9">9am</option>
+            <option value="10">10am</option>
+            <option value="11">11am</option>
+            <option value="12">12am</option>
+            <option value="13">13pm</option>
+            <option value="14">14pm</option>
+            <option value="15">15pm</option>
+            <option value="16">16pm</option>
+            <option value="17">17pm</option>
+            <option value="18">18pm</option>
+            <option value="19">19pm</option>
+            <option value="20">20pm</option>
+            <option value="21">21pm</option>
+            <option value="22">22pm</option>
+            <option value="23">23pm</option>
+        </select>
+        <hr>
+
+        <input type="button" onclick="start()" value="Display Map"/>
+        <input type="button" onclick="clear2()" value="Clear"/> 
+
+        <!-- Uses api key to access google maps api -->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBMbdEJHuimvNZeuWiob2kzUA0KVv0Ixs&callback&v=weekly" defer ></script>
+        
+        
+    </body>
+</html>

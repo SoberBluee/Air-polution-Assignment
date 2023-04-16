@@ -1,0 +1,138 @@
+<html>
+  <head>
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script type="text/javascript">
+    
+        function drawScatterChart() {
+            //Checks to see if any of the checkboxes are checked
+            let check_2016 = $("#2016").is(":checked") ? "true" : "false";
+            let check_2017 = $("#2017").is(":checked") ? "true" : "false";
+            let check_2018 = $("#2018").is(":checked") ? "true" : "false";
+            let check_2019 = $("#2019").is(":checked") ? "true" : "false";
+
+            //Ajax call to index.php passing in all check box information
+            var jsonData = $.ajax({
+                type: 'POST', 
+                url: "index.php",
+                data: { y2016: check_2016, y2017: check_2017, y2018: check_2018, y2019: check_2019,},
+                dataType: "json",
+                async: false
+            }).responseJSON;
+
+            console.log(jsonData);
+                
+            // Create our data table out of JSON data loaded from server.
+            var data = google.visualization.arrayToDataTable(jsonData);
+
+            var options = {
+                title: 'NO values over a Year',
+                hAxis: {title: 'Month', minValue: 0, maxValue: 12},
+                vAxis: {title: 'NO', minValue: 0, maxValue: 15},
+                legend: 'none',
+                lineWidth : 2,
+            };
+            
+            // Instantiate and draw our chart, passing in some options.
+            var chart = new google.visualization.ScatterChart(document.getElementById('scatter_chart'));
+            chart.draw(data, options);
+        }
+
+        function drawLineChart(){
+
+            let d203 = $("#data_203").is(":checked") ? "true" : "false";
+            let d206 = $("#data_203").is(":checked") ? "true" : "false";
+            let d209 = $("#data_203").is(":checked") ? "true" : "false";
+            let d213 = $("#data_203").is(":checked") ? "true" : "false";
+            let d215 = $("#data_203").is(":checked") ? "true" : "false";
+            let d228 = $("#data_203").is(":checked") ? "true" : "false";
+
+            var day = document.getElementById('select_day').value();
+
+            console.log("Day:" + day);
+
+            //Ajax call to index.php passing in all check box information
+            var jsonData = $.ajax({
+                type: 'POST', 
+                url: "line_chart.php",
+                data: {d203:check_203, d206:check_206, d209:check_209, d213:check_213, d215:check_215, d228:check_228},
+                dataType: "json",
+                async: false
+            }).responseJSON;
+
+            var data = google.visualization.arrayToDataTable([
+            
+            ]);
+
+            var options = {
+                
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('line_chart'));
+
+            chart.draw(data, options);
+        }
+
+        function generateScatterChart(){
+            console.log("press");
+            document.getElementById("wait").innerHTML = "Please Wait";
+
+            // Load the Visualization API and the scatter chart package.
+            google.charts.load('current', {'packages':['corechart']});
+            // Set a callback to run when the Google Visualization API is loaded.
+            google.charts.setOnLoadCallback(drawScatterChart);
+
+            // Set a callback to run when the Google Visualization API is loaded.
+            // google.charts.setOnLoadCallback(drawLineChart);
+        }
+
+        function generateLineChart(){
+            // Load the Visualization API and the line chart package.
+            google.charts.load('current', {'packages':['corechart']});
+            // Set a callback to run when the Google Visualization API is loaded.
+            google.charts.setOnLoadCallback(drawLineChart);
+        }
+
+    </script>
+  </head>
+
+  <body>
+    Please select the chart you would like to display
+    </br>
+    <input type="checkbox" name="scatterChart" id="scatterChart" value="scatterChart">ScatterChart</input></br>
+
+    <input type="checkbox" name="lineChart" id="lineChart" value="lineChart">LineChart</input></br>
+    <hr>
+    <h2><u>Scatter Chart</u></h2>
+    Please select a year to display data.
+    <div id="check_box" style="padding: 5;">
+        <input type="checkbox" name="2016" id="2016" value="2016">2016</input></br>
+        <input type="checkbox" name="2017" id="2017" value="2017">2017</input></br>
+        <input type="checkbox" name="2018" id="2018" value="2018">2018</input></br>
+        <input type="checkbox" name="2019" id="2019" value="2019">2019</input></br>
+        <input type="button" style="height: 20px; width: 100;" id="generate_chart" onClick="generateScatterChart()" value="Generate">
+    </div>
+    <!--Div that will hold the pie chart-->
+    <div id="scatter_chart" style="width: 900px; height: 500px;"></div>
+
+    <h2><u>Line Chart</u></h2>
+    Please enter a day between 1 - 31
+    <input type="text" id="select_day"><br>
+
+    <div id="check_box" style="padding: 5;">
+        <input type="checkbox" id="data_203" value="data_203">Brislington Depot</input></br>
+        <input type="checkbox" id="data_206" value="data_206">Rupert Street</input></br>
+        <input type="checkbox" id="data_209" value="data_209">IKEA M32</input></br>
+        <input type="checkbox" id="data_213" value="data_213">Old Market</input></br>
+        <input type="checkbox" id="data_215" value="data_215">Parson Street School</input></br>
+        <input type="checkbox" id="data_228" value="data_228">Temple Meads Station</input></br>
+        <input type="button" style="height: 20px; width: 100;" id="generate_chart" onClick="generateLineChart()" value="Generate">
+    </div>
+
+    <div id="line_chart" style="width: 900px; height: 500px;"></div>
+
+    <label id="wait" ></label>
+  </body>
+</html>
